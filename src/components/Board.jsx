@@ -19,7 +19,7 @@ const Board = () => {
         const col = index % 100;
         return `cell-${row}-${col}`;
       }),
-    [width, height, totalCells]
+    [totalCells]
   );
 
   return (
