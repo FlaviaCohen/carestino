@@ -4,7 +4,7 @@ import { useStore } from "../context/store";
 
 const Cell = ({ id, cellSize }) => {
   const [state, dispatch] = useStore();
-  const { defaultColor, cellWithMenuOpened, activeCells } = state;
+  const { defaultColor, cellWithMenuOpened, activeCells, isMouseDown } = state;
   const [color, setColor] = useState(defaultColor);
 
   const handleClick = () => {
@@ -22,8 +22,16 @@ const Cell = ({ id, cellSize }) => {
     }
   };
 
-  const handleDragOver = () => {
-    handleClick();
+  const handleMouseDown = () => {
+    dispatch({ type: "SET_IS_MOUSE_DOWN", isMouseDown: true });
+  };
+
+  const handleMouseUp = () => {
+    dispatch({ type: "SET_IS_MOUSE_DOWN", isMouseDown: false });
+  };
+
+  const handleMouseMove = () => {
+    isMouseDown && handleClick();
   };
 
   const handleContextMenuClick = (e) => {
@@ -46,7 +54,9 @@ const Cell = ({ id, cellSize }) => {
           : "cell__color--white"
       }`}
       onClick={handleClick}
-      onDragEnter={handleDragOver}
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
       onContextMenu={handleContextMenuClick}
     >
       {cellWithMenuOpened === id && <ColorMenu />}
