@@ -31,7 +31,7 @@ const Cell = ({ id, cellSize }) => {
   };
 
   const handleMouseMove = () => {
-    isMouseDown && handleClick();
+    isMouseDown && !activeCells.includes(id) && handleClick();
   };
 
   const handleContextMenuClick = (e) => {
